@@ -1,27 +1,27 @@
 # LoyaltyFrontApp
 
-This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 1.4.9.
+## Back-end
+
+If you are doing the front part only, a back end is available at https://test-recrutement.loyaltyexpert.net/
+The API documentation is at https://test-recrutement.loyaltyexpert.net/api/doc
+Front-end (React or Angular or vueJs or anything else great :) )
+
+For the front end part, you will build a web page that will display a list of products taken from the API built earlier or gave.
+Products should be listed in a responsive grid. Think mobile!
+
+- Add pagination
+- Add product search
+- Add a form to create a new product or update one
+- Use React or Angular 1/2 to build the website.
+
+### Bonus:
+
+- Add filtering by brand / categories
+- A good look on the frontend will be appreciated
+- Add tests
+
+The quality of commits, documentation, logic is important as well.
 
 ## Development server
 
-Run `ng serve` for a dev server. Navigate to `http://localhost:4200/`. The app will automatically reload if you change any of the source files.
-
-## Code scaffolding
-
-Run `ng generate component component-name` to generate a new component. You can also use `ng generate directive|pipe|service|class|guard|interface|enum|module`.
-
-## Build
-
-Run `ng build` to build the project. The build artifacts will be stored in the `dist/` directory. Use the `-prod` flag for a production build.
-
-## Running unit tests
-
-Run `ng test` to execute the unit tests via [Karma](https://karma-runner.github.io).
-
-## Running end-to-end tests
-
-Run `ng e2e` to execute the end-to-end tests via [Protractor](http://www.protractortest.org/).
-
-## Further help
-
-To get more help on the Angular CLI use `ng help` or go check out the [Angular CLI README](https://github.com/angular/angular-cli/blob/master/README.md).
+Test the project. Once oyu cloned the repo run `npm install` then `ng serve`. Navigate to `http://localhost:4200/`.
