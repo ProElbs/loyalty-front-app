@@ -59,4 +59,18 @@ export class ProductService {
 
     return this._httpClient.put(url, data, { headers: headers });
   }
+
+  /**
+   * Function to edit a product
+   * @param {any} data
+   * @return {Observable}
+   */
+  addProduct(data: any) {
+    const url = environment.apiUrl + 'products';
+
+    let headers = new HttpHeaders();
+    headers = headers.set('Content-Type', 'application/json; charset=utf-8');
+
+    return this._httpClient.post(url, data, { headers: headers });
+  }
 }

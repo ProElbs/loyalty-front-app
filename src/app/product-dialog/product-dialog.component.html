@@ -7,13 +7,13 @@
           <!-- Name of the product -->
           <mat-form-field>
             <input formControlName="name" type="text" matInput placeholder="Nom du produit" maxlength="20" required>
-            <mat-error>Champs requis</mat-error>
+            <mat-error>Required field</mat-error>
           </mat-form-field>
           <!-- Description of the product -->
           <mat-form-field>
             <input formControlName="description" type="text" matInput placeholder="Description du produit" maxlength="100"
               required>
-            <mat-error>Champs requis</mat-error>
+            <mat-error>Required field</mat-error>
           </mat-form-field>
         </div>
         <div class="dialogContent">
@@ -22,7 +22,7 @@
             <mat-select placeholder="Marque" formControlName="brand" required>
               <mat-option *ngFor="let brand of referentielBrands" [value]="brand.id">{{brand.name}}</mat-option>
             </mat-select>
-            <mat-error>Champs requis</mat-error>
+            <mat-error>Required field</mat-error>
           </mat-form-field>
         </div>
         <!-- Submit and cancel buttons -->

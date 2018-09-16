@@ -5,14 +5,15 @@
 <mat-card class="optionCard">
   <form [formGroup]="searchForm">
     <mat-form-field>
-      <input formControlName="research" matInput placeholder="Recherche d'un produit">
+      <input formControlName="research" matInput placeholder="Looking for a product">
     </mat-form-field>
   </form>
   <pagination-controls (pageChange)="getPage($event, this.searchForm.get('research').value)" id="server"></pagination-controls>
+  <button mat-button (click)="openDetailProduct(null)">Add product</button>
 </mat-card>
 <!-- Error case -->
 <div class="centerBlockLoader" *ngIf="productsData === undefined && error && !loadingData">
-  <p>Erreur de chargement des données.</p>
+  <p>An error ouccured</p>
 </div>
 <!-- Normal case -->
 <div *ngIf="productsData !== undefined && !error && !loadingData" class="productContainer">

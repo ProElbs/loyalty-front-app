@@ -60,11 +60,13 @@ export class ProductDialogComponent implements OnInit {
       brand: new FormControl('', Validators.required)
     });
 
-    this.productForm.setValue({
-      name: this.data.product.name,
-      description: this.data.product.description,
-      brand: this.data.product.brand.id
-    });
+    if (this.productEdit) {
+      this.productForm.setValue({
+        name: this.data.product.name,
+        description: this.data.product.description,
+        brand: this.data.product.brand.id
+      });
+    }
   }
 
   /**
@@ -82,34 +84,57 @@ export class ProductDialogComponent implements OnInit {
   modifyProduct(post: any, validForm: boolean) {
     if (validForm) {
       this.loading = true;
-      this._productService.editProduct(this.productEdit.id, post).subscribe(
-        // Success
-        success => {
-          this.loading = false;
-          this.snackBar.open('Le produit a bien été modifié', 'Ok', {
-            duration: 3000
-          });
-          this.closeDialog('refresh');
-        },
-        // Error
-        error => {
-          if (error.code === 400) {
-            this.dialogRef.close();
-            this.snackBar.open('Erreur lors de la modification', 'Ok', {
+      if (this.productEdit) {
+        this._productService.editProduct(this.productEdit.id, post).subscribe(
+          // Success
+          success => {
+            this.loading = false;
+            this.snackBar.open('The product has been modified', 'Ok', {
               duration: 3000
             });
+            this.closeDialog('refresh');
+          },
+          // Error
+          error => {
+            if (error.code === 400) {
+              this.dialogRef.close();
+              this.snackBar.open('An error occured', 'Ok', {
+                duration: 3000
+              });
+            }
+            if (error.code === 404) {
+              this.dialogRef.close();
+              this.snackBar.open('Product not found', 'Ok', {
+                duration: 3000
+              });
+            }
+            this.loading = false;
           }
-          if (error.code === 404) {
-            this.dialogRef.close();
-            this.snackBar.open('Produit non trouvé', 'Ok', {
+        );
+      } else {
+        this._productService.addProduct(post).subscribe(
+          // Success
+          success => {
+            this.loading = false;
+            this.snackBar.open('The product has been modified', 'Ok', {
               duration: 3000
             });
+            this.closeDialog('refresh');
+          },
+          // Error
+          error => {
+            if (error.code === 400) {
+              this.dialogRef.close();
+              this.snackBar.open('An error occured', 'Ok', {
+                duration: 3000
+              });
+            }
+            this.loading = false;
           }
-          this.loading = false;
-        }
-      );
+        );
+      }
     } else {
-      this.snackBar.open('Des champs obligatoires sont manquants', 'Ok', {
+      this.snackBar.open('Required field are missing', 'Ok', {
         duration: 3000
       });
     }
