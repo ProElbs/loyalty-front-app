@@ -22,6 +22,6 @@ Products should be listed in a responsive grid. Think mobile!
 
 The quality of commits, documentation, logic is important as well.
 
-## Development server
+## Test it by yourself !
 
 Test the project. Once oyu cloned the repo run `npm install` then `ng serve`. Navigate to `http://localhost:4200/`.
