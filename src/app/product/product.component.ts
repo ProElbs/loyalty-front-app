@@ -95,6 +95,7 @@ export class ProductComponent implements OnInit, OnDestroy {
           // Error
         },
         error => {
+          this.productsData = undefined;
           this.loadingData = false;
           this.error = true;
         }
