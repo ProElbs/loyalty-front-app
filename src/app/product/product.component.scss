@@ -12,3 +12,20 @@
     height: 200px;
   }
 }
+
+.paginationCard {
+  margin: 10px;
+  text-align: center;
+}
+
+.optionCard {
+  margin: 10px;
+  display: flex;
+  justify-content: space-around;
+  form {
+    width: 40%;
+    mat-form-field {
+      width: 100%;
+    }
+  }
+}

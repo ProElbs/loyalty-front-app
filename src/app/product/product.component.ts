@@ -3,6 +3,9 @@ import { Component, OnInit, OnDestroy } from '@angular/core';
 
 // Services
 import { ProductService } from '../services/product.service';
+import { FormGroup, FormBuilder, FormControl } from '@angular/forms';
+import { Subscription } from 'rxjs';
+import 'rxjs/add/operator/debounceTime';
 
 @Component({
   selector: 'app-product',
@@ -14,39 +17,42 @@ export class ProductComponent implements OnInit, OnDestroy {
   private productPendingRequest: any;
 
   // General component variables
-  public error: boolean; // Error loading
+  public error = false; // Error loading
   public loadingData: boolean; // Page is laoding to receive data
-  public page = 1;
+  public smallLoader: boolean; // Data are loading
+  public page: number; // Current page
+  public searchSubscriber: Subscription;
 
   // Products variables
   public productsData: any;
+  public totalProduct: number; // total product in Database
+  public searchForm: FormGroup; // Form to edit metier
 
-  constructor(private _productService: ProductService) {}
+  constructor(
+    private _productService: ProductService,
+    private fb: FormBuilder
+  ) {}
 
   /**
    * Initialization of component, loader, error, referentiel and agent informations
    */
   ngOnInit() {
-    this.error = false;
-    this.loadingData = true;
-
     if (this.productPendingRequest) {
       this.productPendingRequest.unsubscribe();
     }
+    this.searchForm = this.fb.group({
+      research: new FormControl('')
+    });
 
-    this.productPendingRequest = this._productService.getProducts().subscribe(
-      // Success
-      data => {
-        this.productsData = data;
-        console.log(data);
-        this.loadingData = false;
-        // Error
-      },
-      error => {
-        this.loadingData = false;
-        this.error = true;
-      }
-    );
+    this.getPage(1, undefined);
+
+    // Debounce for search completion to reduce API call
+    this.searchSubscriber = this.searchForm
+      .get('research')
+      .valueChanges.debounceTime(600)
+      .subscribe(success => {
+        this.getPage(1, this.searchForm.get('research').value);
+      });
   }
 
   /**
@@ -56,5 +62,26 @@ export class ProductComponent implements OnInit, OnDestroy {
     if (this.productPendingRequest) {
       this.productPendingRequest.unsubscribe();
     }
+    this.searchSubscriber.unsubscribe();
+  }
+
+  getPage(page: number, search) {
+    this.loadingData = true;
+    this.productPendingRequest = this._productService
+      .getProducts(page, search)
+      .subscribe(
+        // Success
+        data => {
+          this.productsData = data.body;
+          this.page = page;
+          this.totalProduct = data.headers.get('X-Pagination-Count');
+          this.loadingData = false;
+          // Error
+        },
+        error => {
+          this.loadingData = false;
+          this.error = true;
+        }
+      );
   }
 }

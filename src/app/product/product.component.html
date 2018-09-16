@@ -2,13 +2,22 @@
 <div class="centerBlockLoader" *ngIf="loadingData && !error ">
   <mat-spinner></mat-spinner>
 </div>
+<mat-card class="optionCard">
+  <form [formGroup]="searchForm">
+    <mat-form-field>
+      <input formControlName="research" matInput placeholder="Recherche d'un produit">
+    </mat-form-field>
+  </form>
+  <pagination-controls (pageChange)="getPage($event, this.searchForm.get('research').value)" id="server"></pagination-controls>
+</mat-card>
 <!-- Error case -->
 <div class="centerBlockLoader" *ngIf="productsData === undefined && error && !loadingData">
   <p>Erreur de chargement des données.</p>
 </div>
 <!-- Normal case -->
 <div *ngIf="productsData !== undefined && !error && !loadingData" class="productContainer">
-  <mat-card *ngFor="let product of productsData | paginate: { itemsPerPage: 10, currentPage: page }" class="productCard">
+  <mat-card *ngFor="let product of productsData | paginate: { id: 'server', itemsPerPage: 20, currentPage: page, totalItems: totalProduct }"
+    class="productCard">
     <mat-card-header>
       <div mat-card-avatar></div>
       <mat-card-title>{{product.name}}</mat-card-title>
@@ -21,7 +30,7 @@
       </p>
     </mat-card-content>
   </mat-card>
-  <div>
-    <pagination-controls (pageChange)="page = $event"></pagination-controls>
-  </div>
 </div>
+<mat-card class="paginationCard">
+  <pagination-controls (pageChange)="getPage($event, this.searchForm.get('research').value)" id="server"></pagination-controls>
+</mat-card>
