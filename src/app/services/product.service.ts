@@ -12,6 +12,7 @@ export class ProductService {
   /**
    * Function to get all the products
    * @param {number} page
+   * @param {string} search
    * @return {Observable}
    */
   getProducts(page: number, search: string): Observable<any> {
@@ -61,7 +62,7 @@ export class ProductService {
   }
 
   /**
-   * Function to edit a product
+   * Function to add a product
    * @param {any} data
    * @return {Observable}
    */
