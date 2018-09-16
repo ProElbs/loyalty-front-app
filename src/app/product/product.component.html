@@ -1,0 +1,27 @@
+<!-- Loading -->
+<div class="centerBlockLoader" *ngIf="loadingData && !error ">
+  <mat-spinner></mat-spinner>
+</div>
+<!-- Error case -->
+<div class="centerBlockLoader" *ngIf="productsData === undefined && error && !loadingData">
+  <p>Erreur de chargement des données.</p>
+</div>
+<!-- Normal case -->
+<div *ngIf="productsData !== undefined && !error && !loadingData" class="productContainer">
+  <mat-card *ngFor="let product of productsData | paginate: { itemsPerPage: 10, currentPage: page }" class="productCard">
+    <mat-card-header>
+      <div mat-card-avatar></div>
+      <mat-card-title>{{product.name}}</mat-card-title>
+      <mat-card-subtitle *ngIf="product.brand">{{product.brand.name}}</mat-card-subtitle>
+    </mat-card-header>
+    <img mat-card-image src="{{product.image}}" alt="Photo of {{product.name}}">
+    <mat-card-content>
+      <p>
+        {{product.description}}
+      </p>
+    </mat-card-content>
+  </mat-card>
+  <div>
+    <pagination-controls (pageChange)="page = $event"></pagination-controls>
+  </div>
+</div>

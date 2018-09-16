@@ -1,0 +1,14 @@
+.productContainer {
+  display: flex;
+  justify-content: space-around;
+  flex-wrap: wrap;
+  padding: 10px;
+}
+
+.productCard {
+  width: 300px;
+  margin: 10px;
+  img {
+    height: 200px;
+  }
+}
