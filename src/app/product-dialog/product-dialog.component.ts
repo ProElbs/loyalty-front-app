@@ -54,7 +54,7 @@ export class ProductDialogComponent implements OnInit {
         Validators.required
       ]),
       description: new FormControl('', [
-        Validators.maxLength(20),
+        Validators.maxLength(100),
         Validators.required
       ]),
       brand: new FormControl('', Validators.required)
@@ -78,8 +78,8 @@ export class ProductDialogComponent implements OnInit {
   }
 
   /**
-   * Post modified agent's contact information
-   * @param {any} post contact informations data
+   * Modify a product or add it
+   * @param {any} post data about the product
    */
   modifyProduct(post: any, validForm: boolean) {
     if (validForm) {
