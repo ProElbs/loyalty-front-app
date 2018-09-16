@@ -1,0 +1,39 @@
+<h2 mat-dialog-title>Modifier le produit</h2>
+<mat-dialog-content>
+  <div class="mat-dialog">
+    <div class="dialogContent">
+      <form [formGroup]="productForm" (ngSubmit)="modifyProduct(productForm.value, productForm.valid)">
+        <div class="dialogContent">
+          <!-- Name of the product -->
+          <mat-form-field>
+            <input formControlName="name" type="text" matInput placeholder="Nom du produit" maxlength="20" required>
+            <mat-error>Champs requis</mat-error>
+          </mat-form-field>
+          <!-- Description of the product -->
+          <mat-form-field>
+            <input formControlName="description" type="text" matInput placeholder="Description du produit" maxlength="100"
+              required>
+            <mat-error>Champs requis</mat-error>
+          </mat-form-field>
+        </div>
+        <div class="dialogContent">
+          <!-- Brand -->
+          <mat-form-field>
+            <mat-select placeholder="Marque" formControlName="brand" required>
+              <mat-option *ngFor="let brand of referentielBrands" [value]="brand.id">{{brand.name}}</mat-option>
+            </mat-select>
+            <mat-error>Champs requis</mat-error>
+          </mat-form-field>
+        </div>
+        <!-- Submit and cancel buttons -->
+        <div class="dialogButton">
+          <button [disabled]="!productForm.valid" mat-button color="primary" type="submit" mat-button>Modifier</button>
+          <button mat-button color="primary" type="button" mat-button (click)="closeDialog()">Annuler</button>
+        </div>
+      </form>
+    </div>
+  </div>
+</mat-dialog-content>
+<div *ngIf="loading">
+  <mat-progress-bar mode="indeterminate" color="primary"></mat-progress-bar>
+</div>

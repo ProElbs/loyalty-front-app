@@ -8,7 +8,7 @@
 .productCard {
   width: 300px;
   margin: 10px;
-  img {
+  .mat-card-image {
     height: 200px;
   }
 }
@@ -28,4 +28,8 @@
       width: 100%;
     }
   }
+}
+
+.mat-card-actions {
+  text-align: right;
 }

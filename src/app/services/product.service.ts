@@ -1,9 +1,11 @@
 import { Injectable } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Observable } from 'rxjs/Observable';
 import { environment } from '../../environments/environment';
 
-@Injectable()
+@Injectable({
+  providedIn: 'root'
+})
 export class ProductService {
   constructor(private readonly _httpClient: HttpClient) {}
 
@@ -41,5 +43,20 @@ export class ProductService {
         }
       );
     }
+  }
+
+  /**
+   * Function to edit a product
+   * @param {number} idProduct
+   * @param {any} data
+   * @return {Observable}
+   */
+  editProduct(idProduct: number, data: any) {
+    const url = environment.apiUrl + 'products/' + idProduct;
+
+    let headers = new HttpHeaders();
+    headers = headers.set('Content-Type', 'application/json; charset=utf-8');
+
+    return this._httpClient.put(url, data, { headers: headers });
   }
 }

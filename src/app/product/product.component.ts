@@ -1,11 +1,15 @@
 // Angular module
 import { Component, OnInit, OnDestroy } from '@angular/core';
-
-// Services
-import { ProductService } from '../services/product.service';
+import { MatDialog } from '@angular/material/dialog';
 import { FormGroup, FormBuilder, FormControl } from '@angular/forms';
 import { Subscription } from 'rxjs';
 import 'rxjs/add/operator/debounceTime';
+
+// Services
+import { ProductService } from '../services/product.service';
+
+// Other
+import { ProductDialogComponent } from '../product-dialog/product-dialog.component';
 
 @Component({
   selector: 'app-product',
@@ -28,9 +32,16 @@ export class ProductComponent implements OnInit, OnDestroy {
   public totalProduct: number; // total product in Database
   public searchForm: FormGroup; // Form to edit metier
 
+  /**
+   * Constructor of the class
+   * @param _productService Product service
+   * @param fb Formbuilder of Angular
+   * @param dialog Material dialog
+   */
   constructor(
     private _productService: ProductService,
-    private fb: FormBuilder
+    private fb: FormBuilder,
+    public dialog: MatDialog
   ) {}
 
   /**
@@ -65,6 +76,11 @@ export class ProductComponent implements OnInit, OnDestroy {
     this.searchSubscriber.unsubscribe();
   }
 
+  /**
+   * Function to load product regarding page and/or search option
+   * @param {number} page
+   * @param {string} search
+   */
   getPage(page: number, search) {
     this.loadingData = true;
     this.productPendingRequest = this._productService
@@ -83,5 +99,33 @@ export class ProductComponent implements OnInit, OnDestroy {
           this.error = true;
         }
       );
+  }
+
+  /**
+   * Function to open a dialog displaying details on a product
+   * @param name
+   * @param description
+   * @param brandId
+   * @param image
+   * @param id
+   * @param categoriesId
+   */
+  openDetailProduct(product) {
+    const dialogRef = this.dialog.open(ProductDialogComponent, {
+      data: {
+        product: product
+      },
+      autoFocus: false
+    });
+
+    // Disable click aside to close dialog and ESC from keyboard
+    dialogRef.disableClose = true;
+
+    // Event when dialog is closed, reload datas
+    dialogRef.afterClosed().subscribe(success => {
+      if (success === 'refresh') {
+        this.getPage(this.page, this.searchForm.get('research').value);
+      }
+    });
   }
 }
