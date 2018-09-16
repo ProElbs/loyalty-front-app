@@ -10,7 +10,7 @@ export class ProductService {
   constructor(private readonly _httpClient: HttpClient) {}
 
   /**
-   * Function to get all the products
+   * Function to get all products
    * @param {number} page
    * @param {string} search
    * @return {Observable}

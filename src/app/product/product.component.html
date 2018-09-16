@@ -2,6 +2,7 @@
 <div class="centerBlockLoader" *ngIf="loadingData && !error ">
   <mat-spinner></mat-spinner>
 </div>
+<!-- Main bar for research, pagination and add a product -->
 <mat-card class="optionCard">
   <form [formGroup]="searchForm">
     <mat-form-field>
@@ -34,6 +35,7 @@
     </mat-card-actions>
   </mat-card>
 </div>
+<!-- Pagination -->
 <mat-card class="paginationCard">
   <pagination-controls (pageChange)="getPage($event, this.searchForm.get('research').value)" id="server"></pagination-controls>
 </mat-card>

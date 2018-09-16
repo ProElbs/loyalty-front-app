@@ -1,15 +1,19 @@
+// Angular import
 import { Component, OnInit, Inject } from '@angular/core';
-
-import { MAT_DIALOG_DATA, MatDialogRef, MatSnackBar } from '@angular/material';
-import { ProductService } from '../services/product.service';
-import { CategorieService } from '../services/categorie.service';
-import { BrandService } from '../services/brand.service';
 import {
   FormBuilder,
   FormGroup,
   FormControl,
   Validators
 } from '@angular/forms';
+
+// Material import
+import { MAT_DIALOG_DATA, MatDialogRef, MatSnackBar } from '@angular/material';
+
+// Service import
+import { ProductService } from '../services/product.service';
+import { CategorieService } from '../services/categorie.service';
+import { BrandService } from '../services/brand.service';
 
 @Component({
   selector: 'app-product-dialog',
@@ -19,12 +23,24 @@ import {
 export class ProductDialogComponent implements OnInit {
   public productForm: FormGroup; // Form to edit a product
 
+  // General variables
   public productEdit;
   public loading: boolean;
 
+  // Referentiel variables
   public referentielBrands;
   public referentielCategories;
 
+  /**
+   * Constructor of the class
+   * @param _productService
+   * @param _categorieService
+   * @param _brandService
+   * @param dialogRef
+   * @param fb
+   * @param snackBar
+   * @param data
+   */
   constructor(
     private _productService: ProductService,
     private _categorieService: CategorieService,
@@ -37,6 +53,9 @@ export class ProductDialogComponent implements OnInit {
     this.productEdit = this.data.product;
   }
 
+  /**
+   * Initialization of component, referentiels and form are loaded
+   */
   ngOnInit() {
     // Initialization of Categorie referentiel
     this._categorieService.getCategories().subscribe(data => {
@@ -60,6 +79,7 @@ export class ProductDialogComponent implements OnInit {
       brand: new FormControl('', Validators.required)
     });
 
+    // Set values only if we are in edit mode
     if (this.productEdit) {
       this.productForm.setValue({
         name: this.data.product.name,
@@ -84,6 +104,7 @@ export class ProductDialogComponent implements OnInit {
   modifyProduct(post: any, validForm: boolean) {
     if (validForm) {
       this.loading = true;
+      // Edit product
       if (this.productEdit) {
         this._productService.editProduct(this.productEdit.id, post).subscribe(
           // Success
@@ -111,6 +132,7 @@ export class ProductDialogComponent implements OnInit {
             this.loading = false;
           }
         );
+        // Add product
       } else {
         this._productService.addProduct(post).subscribe(
           // Success

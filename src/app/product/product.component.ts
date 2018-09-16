@@ -1,11 +1,11 @@
-// Angular module
+// Angular import
 import { Component, OnInit, OnDestroy } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { FormGroup, FormBuilder, FormControl } from '@angular/forms';
 import { Subscription } from 'rxjs';
 import 'rxjs/add/operator/debounceTime';
 
-// Services
+// Services import
 import { ProductService } from '../services/product.service';
 
 // Other
@@ -45,12 +45,13 @@ export class ProductComponent implements OnInit, OnDestroy {
   ) {}
 
   /**
-   * Initialization of component, loader, error, referentiel and agent informations
+   * Initialization of component, search bar, pagination and products are loaded
    */
   ngOnInit() {
     if (this.productPendingRequest) {
       this.productPendingRequest.unsubscribe();
     }
+
     this.searchForm = this.fb.group({
       research: new FormControl('')
     });
